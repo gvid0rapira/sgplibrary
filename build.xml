@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="SGPLibrary">
+	<!-- Имя проекта и версия -->
+	<property name="app.name"      value="SGPLibrary"/>
+	<property name="app.version"   value="0.1"/>
+	<property name="war.name"       value="${proj.name}-${proj.version}.war"/>
+	<!-- Глобальные свойства проекта -->
+	<property name="tomcat.dir"     value="D:\tools\java\apache-tomcat-6.0.26"/>
+	<property name="bin.dir"        value="bin"/>
+	<property name="src.dir"        value="src"/>
+	<property name="test.dir"       value="test"/>
+	<property name="config.dir"     value="config"/>
+	<property name="web.dir"        value="WebContent"/>
+	<property name="lib.dir"        value="lib"/>
+	<property name="build.dir"      value="build"/>
+	<property name="dist.dir"       value="dist"/>
+
+	<!-- Пути к библиотекам проекта -->
+	<path id="proj.lib">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+			<include name="**/*.zip"/>
+		</fileset>
+	</path>
+	<path id="compile.lib">
+		<pathelement location="${tomcat.dir}/lib/servlet-api.jar"/>
+		<pathelement location="${tomcat.dir}/lib/jsp-api.jar"/>
+		<pathelement location="${tomcat.dir}/lib/el-api.jar"/>
+		<pathelement location="${tomcat.dir}/lib/toplink-essentials.jar"/>
+		<pathelement location="${tomcat.dir}/lib/toplink-essentials-agent.jar"/>
+	</path>
+
+	<import file="build_derby.xml"/>
+	
+	<!-- =###= Общие задачи =###======================================== -->
+	<target name="all" 
+            depends="dist"
+            description="построить все"/>
+	<target name="clean" description="удаление сгенерированных файлов">
+		<delete dir="${build.dir}"/>
+		<mkdir dir="${build.dir}"/>
+		<delete dir="${dist.dir}"/>
+		<mkdir dir="${dist.dir}"/>
+	</target>
+
+	<!-- =###= Компилиция =###======================================== -->
+	
+	<property name="compile.debug"       value="true"/>
+	<property name="compile.deprecation" value="false"/>
+	<property name="compile.optimize"    value="true"/>
+
+	<target name="compile" depends="prepare"
+	   		description="Компиляция исходников java">
+
+		<javac srcdir="${src.dir}" 
+			   destdir="${build.dir}/WEB-INF/classes" 
+			   debug="${compile.debug}" 
+			   deprecation="${compile.deprecation}" 
+			   optimize="${compile.optimize}">
+			<classpath>
+				<path refid="proj.lib"/>
+				<path refid="compile.lib"/>
+			</classpath>
+		</javac>
+
+		<!-- Копируем ресурсы -->
+		<copy todir="${build.dir}/WEB-INF/classes">
+			<fileset dir="${src.dir}" excludes="**/*.java" />
+			<fileset dir="${config.dir}" excludes="**/*.java" />
+		</copy>
+
+	</target>
+
+	<target name="compile_test" description="компиляция тестов" depends="compile">
+		<javac srcdir="${test.dir}" 
+		       destdir="${build.dir}/WEB-INF/classes" 
+		       debug="${compile.debug}" 
+		       deprecation="${compile.deprecation}" 
+		       optimize="${compile.optimize}">
+			<classpath>
+				<path refid="proj.lib"/>
+				<path refid="compile.lib"/>
+			</classpath>
+		</javac>
+	</target>
+
+	<!-- =###= Дистрибутив =###= ===================================== -->
+	<target name="dist" depends="compile"
+	   		description="Создание сборки">
+
+	    <jar jarfile="${dist.dir}/${app.name}.war"
+	         basedir="${build.dir}"/>
+
+	</target>
+
+
+
+
+	<!--
+
+	  The "prepare" target is used to create the "build" destination directory,
+	  and copy the static contents of your web application to it.  If you need
+	  to copy static files from external dependencies, you can customize the
+	  contents of this task.
+
+	  Normally, this task is executed indirectly when needed.
+
+	-->
+
+	<target name="prepare" description="Создает директорию сборки и копирует статический контент">
+
+		<mkdir  dir="${build.dir}"/>
+		<mkdir  dir="${build.dir}/WEB-INF"/>
+		<mkdir  dir="${build.dir}/WEB-INF/classes"/>
+
+		<copy todir="${build.dir}">
+			<fileset dir="${web.dir}"/>
+		</copy>
+
+		<mkdir  dir="${build.dir}/WEB-INF/lib"/>
+		<copy todir="${build.dir}/WEB-INF/lib">
+			<path refid="proj.lib"/>
+		</copy>
+
+	</target>
+
+	<!-- =###= Тесты =###======================================== -->
+	<target name="test" description="Запуск тестов"
+	    depends="compile_test">
+	<junit printsummary="yes" fork="yes">
+	    <classpath>
+              <path refid="proj.lib"/>
+              <path refid="compile.lib"/>
+              <pathelement location="${build.dir}/WEB-INF/classes"/>
+            </classpath>
+
+	    <formatter type="plain"/>
+	    <!--test name="library.persistance.JPATest"/-->
+	    <test name="library.dao.jdbc.JdbcContentTypeDAOTest"/>
+	</junit>
+	</target>
+	
+	<!-- =###= Разывертывание =###========================================= -->
+	<target name="deploy" depends="compile">
+        <!--delete dir="${tomcat.dir}/webapps/sgplib" /-->
+        <mkdir dir="${tomcat.dir}/webapps/sgplib" />
+        <copy todir="${tomcat.dir}/webapps/sgplib">
+			<fileset dir="${build.dir}"/>
+		</copy>
+	</target>
+	<target name="undeploy">
+        <delete dir="${tomcat.dir}/webapps/sgplib"/>
+	</target>
+
+
+</project>

@@ -1,0 +1,110 @@
+@CHARSET "UTF-8";
+
+/* Общая часть */
+html,body{
+      margin:0;
+      padding:0;
+      height:100%;
+      border:none;
+      font-family: Tahoma, Helvetica, sans-serif;
+      font-size: x-small;
+}
+table { 
+    /*table-layout: fixed;*/
+    border-collapse: collapse;
+}
+.page_header{
+    color: white;
+	font-size: large;
+}
+#main_menu{
+	padding: 5px;
+	background-color: SteelBlue;
+}
+#banner{
+	height: 50px;
+	background-color: SteelBlue;
+	color: white;
+}
+#left_menu{
+	padding: 5px;
+	background-color: LightSteelBlue;
+}
+#body{
+	padding: 10px;
+	background-color: #d3e1e7;
+}
+#footer{
+	height: 30px;
+	background-color: SteelBlue;
+	font-style: italic;
+	font-size: x-small;
+	text-align: center;
+}
+.control_text{
+	text-decoration: none;
+	font-weight: 100;
+	font-size: medium;
+	color: #91919a;
+}
+
+/* Форма */
+
+.form{
+	
+}
+.form_title {
+	font-size: large;
+	font-weight: bolder;	
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+.form_section_title {
+	font-size: medium;
+	font-weight: normal;
+}
+.paginator{
+	background-color: #a8b0b3;
+}
+.paginator_selected{
+	color: #7171ac;
+	font-weight: 300;
+	font-size: large;
+}
+/* Элемент управления, который можно кликнуть. */
+.active{
+	cursor: pointer;
+}
+.button_general{
+	padding: 3px;
+    font-weight: bold;
+    font-size: x-small;
+    color: #778899;
+}
+
+.column_header{
+	border: 1px solid #7171AC;
+	background-color: #3399CC;
+	color: #EEEEEE;
+}
+.row_even{
+	background-color: #87CEFA;
+}
+.row_odd{
+    background-color: #E8E8E8;
+}
+label {
+	font-weight: bold;
+}
+label.error {
+	color: #ff0000;
+}
+.error_box{
+	padding-left:   5px;
+	padding-top:    3px;
+	padding-right:  3px;
+	padding-bottom: 3px;
+	color: #ffffff;
+	background-color: #ff0000;
+	border: 1px solid #dd0000;
+}

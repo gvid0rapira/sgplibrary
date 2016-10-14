@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="StaffTools">
+
+
+	<property name="db_driver" value="org.apache.derby.jdbc.ClientDriver"/>
+	<property name="db_url" value="jdbc:derby://localhost:1527/sgplib;create=true"/>
+	<property name="db_user" value="sa"/>
+	<property name="db_password" value="sa"/>
+
+	<!-- =###= БД: DERBY =###=========================================== -->
+
+	<target name="create_db_schema"
+	        description="Создание схемы БД">
+		<sql driver="${db_driver}"
+	             url="${db_url}"
+	             userid="${db_user}"
+	             password="${db_password}"
+	             src="config/sql/Derby/schema.sql">
+
+			<classpath>
+				<path refid="proj.lib"/>
+			</classpath>
+
+		</sql>
+	</target>
+
+	<target name="fill_ref_books" description="Заполнение справочников">
+		<sql driver="${db_driver}"
+	             url="${db_url}"
+	             userid="${db_user}"
+	             password="${db_password}">
+
+			<classpath>
+				<path refid="proj.lib"/>
+			</classpath>
+			
+			<filelist dir="config/sql/Derby">
+			    <file name="content_type.sql"/>
+				<file name="department.sql"/>
+			</filelist>
+
+		</sql>
+	</target>
+
+	<target name="insert_test_data"
+	            description="Вставка тестовых данных">
+		<sql driver="${db_driver}" 
+	                     url="${db_url}" 
+	                     userid="${db_user}" 
+	                     password="${db_password}">
+
+			<classpath>
+				<path refid="proj.lib" />
+			</classpath>
+
+			<filelist dir="config/sql/Derby">
+				<file name="test_data.sql"/>
+			</filelist>
+
+		</sql>
+	</target>
+
+	<target name="reinit_db" description="Пересоздание БД"
+	        depends="create_db_schema, fill_ref_books">
+	</target>
+
+</project>

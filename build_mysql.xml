@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="StaffTools">
+	
+
+	<!-- =###= БД: MYSQL =###=========================================== -->
+	<!--taskdef name="mappingtool" 
+    	classname="org.apache.openjpa.jdbc.ant.MappingToolTask" 
+    	classpathref="proj.lib"/-->
+    
+	<target name="create_db_schema"
+	    description="Создание схемы БД">
+	    <sql driver="com.mysql.jdbc.Driver"
+             url="jdbc:mysql://localhost"
+             userid="manager"
+             password="manager"
+             src="config/sql/mysql/schema.sql">
+
+            <classpath>
+                <path refid="proj.lib"/>
+            </classpath>
+
+            </sql>
+	</target>
+    
+	<target name="create_db" description="Создание БД и пользователя">
+        <sql driver="com.mysql.jdbc.Driver"
+             url="jdbc:mysql://localhost"
+             userid="root"
+             password="root"
+             src="config/sql/mysql/create_db.sql">
+
+            <classpath>
+                <path refid="proj.lib"/>
+            </classpath>
+
+        </sql>
+    </target>
+
+	<target name="fill_ref_books" description="Заполнение справочников">
+		<sql driver="com.mysql.jdbc.Driver"
+		     url="jdbc:mysql://localhost/sgplibrary"
+		     userid="manager"
+		     password="manager"
+		     src="config/sql/mysql/mime.sql">
+
+			<classpath>
+				<path refid="proj.lib"/>
+			</classpath>
+
+		</sql>
+	</target>
+	
+	<target name="reinit_db" description="Пересоздание БД"
+	    depends="create_db, create_db_schema, fill_ref_books">
+	</target>
+
+</project>

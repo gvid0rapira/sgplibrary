@@ -1,0 +1,11 @@
+<!-- Tomcat context descriptor used for specifying a custom ClassLoader -->
+<Context path="/library" reloadable="true">
+	<!-- please note that useSystemClassLoaderAsParent is available since Tomcat 5.5.20 / remove if previous versions are being used -->
+	  
+	<Loader loaderClass="org.springframework.instrument.classloading.tomcat.TomcatInstrumentableClassLoader" useSystemClassLoaderAsParent="false"/>
+	<!-- Turn off session serialization -->
+    <Manager className="org.apache.catalina.session.PersistentManager"
+      debug="0" distributable="false" saveOnRestart="false">
+        <Store className="org.apache.catalina.session.FileStore"/>
+    </Manager>
+</Context>

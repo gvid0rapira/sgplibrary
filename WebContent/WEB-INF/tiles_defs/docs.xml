@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+  <definition name="docs" extends="classic4">
+    <put-attribute name="title" value="Документы" />
+    <put-attribute name="left_menu" value="/WEB-INF/jsp/tiles/docs/left_menu.jsp" />
+  </definition>
+  <definition name="doc.register" extends="docs">
+    <put-attribute name="title" value="Журнал документов" />
+    <put-attribute name="script" value="/WEB-INF/jsp/tiles/docs/doc_register.js.part" />
+    <put-attribute name="body" value="/WEB-INF/jsp/tiles/docs/doc_register.jsp" />
+  </definition>
+  <definition name="doc.register.exception" extends="docs">
+    <put-attribute name="title" value="Журнал документов: ошибка" />
+    <put-attribute name="body" value="/WEB-INF/jsp/tiles/docs/doc_register_exception.jsp" />
+  </definition>
+  <definition name="doc.card.edit" extends="docs">
+    <put-attribute name="title" value="Карточка документа" />
+    <put-attribute name="script" value="/WEB-INF/jsp/tiles/docs/doc_card_edit.js.part" />
+    <put-attribute name="script" value="/WEB-INF/jsp/tiles/docs/doc_card_edit.css.part" />
+    <put-attribute name="body" value="/WEB-INF/jsp/tiles/docs/doc_card_edit.jsp" />
+  </definition>
+  <definition name="doc.version.edit" extends="docs">
+    <put-attribute name="title" value="Версия документа" />
+    <put-attribute name="body" value="/WEB-INF/jsp/tiles/docs/doc_version_edit.jsp" />
+  </definition>
+  <definition name="doc.send_record.select_dep" extends="docs">
+    <put-attribute name="title" value="Выбор службы" />
+    <put-attribute name="body" value="/WEB-INF/jsp/tiles/docs/send_rec_select_dep.jsp" />
+  </definition>
+</tiles-definitions>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+  <definition name="classic3" template="/WEB-INF/jsp/layouts/classic3.jsp">
+    <put-attribute name="header" value="/WEB-INF/jsp/tiles/banner.jsp" />
+    <put-attribute name="main_menu" value="/WEB-INF/jsp/tiles/main_menu.jsp" />
+    <put-attribute name="footer" value="/WEB-INF/jsp/tiles/credits.jsp" />
+  </definition>
+  <definition name="classic4" template="/WEB-INF/jsp/layouts/classic4.jsp">
+    <put-attribute name="header" value="/WEB-INF/jsp/tiles/banner.jsp" />
+    <put-attribute name="main_menu" value="/WEB-INF/jsp/tiles/main_menu.jsp" />
+    <put-attribute name="footer" value="/WEB-INF/jsp/tiles/credits.jsp" />
+  </definition>
+  <definition name="welcome" extends="classic3">
+    <put-attribute name="title" value="Библиотека" />
+    <put-attribute name="body" value="/WEB-INF/jsp/tiles/welcome_body.jsp" />
+  </definition>
+</tiles-definitions>

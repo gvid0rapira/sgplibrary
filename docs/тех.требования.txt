@@ -1,0 +1,20 @@
+
+1. Запрос сохранения в БД должен поддерживать размер максимум 16МБ.
+
+Для этого настраиваем сервер в my.ini:
+#The size of the an sql request packet for the server
+max_allowed_packet=16M
+
+2. Содержимое документа должно подгружаться только при работе с конкретным
+документом, для минимизации загрузки памяти.
+
+Использовать JPA lazy для свойства content объекта DocumentContent.
+
+3. Не сериализовать сессию веб приложения и, соответственно, не восстанавливать
+ее при рестарте Tomcat.
+Добавить в конфигурацию развертывания <war root>/META-INF/context.xml следующее:
+    <!-- Turn off session serialization -->
+    <Manager className="org.apache.catalina.session.PersistentManager"
+      debug="0" distributable="false" saveOnRestart="false">
+        <Store className="org.apache.catalina.session.FileStore"/>
+    </Manager>

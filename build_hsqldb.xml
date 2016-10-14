@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="SGPLib:HSQLDB">
+
+	<property name="db_driver" value="org.hsqldb.jdbc.JDBCDriver"/>
+	<property name="db_url" value="jdbc:hsqldb:hsql://localhost/sgplib"/>
+	<property name="db_user" value="SA"/>
+	<property name="db_password" value=""/>
+
+	<!-- =###= БД: HSQLDB =###=========================================== -->
+
+	<target name="create_db_schema"
+	    description="Создание схемы БД">
+		<sql driver="${db_driver}"
+             url="${db_url}"
+             userid="${db_user}"
+             password="${db_password}"
+             src="config/sql/hsqldb/schema.sql">
+
+			<classpath>
+				<path refid="proj.lib"/>
+			</classpath>
+
+		</sql>
+	</target>
+
+	<target name="fill_ref_books" description="Заполнение справочников">
+		<sql driver="${db_driver}"
+             url="${db_url}"
+             userid="${db_user}"
+             password="${db_password}"
+             src="config/sql/hsqldb/mime.sql">
+
+			<classpath>
+				<path refid="proj.lib"/>
+			</classpath>
+
+		</sql>
+	</target>
+
+	<target name="insert_test_data"
+	        description="Вставка тестовых данных">
+		<sql driver="${db_driver}" 
+	                 url="${db_url}" 
+	                 userid="${db_user}" 
+	                 password="${db_password}">
+
+			<classpath>
+				<path refid="proj.lib" />
+			</classpath>
+
+			<filelist dir="config/sql/hsqldb">
+				<file name="test_data.sql"/>
+			</filelist>
+
+		</sql>
+	</target>
+
+	<target name="reinit_db" description="Пересоздание БД"
+	    depends="create_db_schema, fill_ref_books">
+	</target>
+
+
+</project>
